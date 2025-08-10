@@ -10,9 +10,9 @@ export default function WordListArea({ value, onChange, onShuffle }: WordListAre
             <button
                 onClick={onShuffle}
                 type="button"
-                className="px-4 py-1 mb-3 text-sm font-medium text-gray-400 rounded-lg bg-white/10 backdrop-blur-sm border border-white/10 cursor-pointer"
+                className="flex items-center gap-x-2 px-3 py-1.5 mb-3 text-sm font-medium text-gray-400 rounded-lg bg-white/10 backdrop-blur-sm border border-white/10 cursor-pointer"
             >
-                Shuffle
+                <span className="block">Shuffle</span>
             </button>
             <textarea
                 rows={40}
