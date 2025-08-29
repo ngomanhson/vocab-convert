@@ -2,6 +2,7 @@
 
 body {
     font-family: "Poppins", sans-serif;
+    font-weight: 400;
     color: #fff;
     background-color: #000;
     background-image: radial-gradient(at 94% 28%, #000 0, transparent 60%), radial-gradient(at 33% 39%, #316ab5 0, transparent 50%), radial-gradient(at 59% 96%, #4c5193 0, transparent 40%),

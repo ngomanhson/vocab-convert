@@ -1,4 +1,5 @@
-import React, { cloneElement, ComponentProps, HTMLAttributes } from "react"
+import { cloneIconElement } from "@/utils/helper";
+import React, { ComponentProps, HTMLAttributes } from "react"
 import { twMerge } from "tailwind-merge";
 
 type ButtonVariant = "primary" | "secondary" | "ghost";
@@ -43,14 +44,8 @@ export default function Button({ children, variant = "ghost", size = "lg", leftI
         "lg": "size-6",
     }
 
-    const { className: leftIconClassName, ...leftIconProps } = leftIcon?.props || {}
-
-    const leftIconClone = leftIcon ? cloneElement(leftIcon, {
-        className: twMerge(iconSizeClassNames[size], iconVariantClassNames[variant]),
-        ...leftIconProps
-    }) : null;
-
-
+    const { className: leftIconClassName } = leftIcon?.props || {}
+    const leftIconClone = cloneIconElement(leftIcon, twMerge(iconSizeClassNames[size], iconVariantClassNames[variant]));
     const loading = <div className={twMerge("absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 size-5 border-2 border-current border-t-transparent border-b-transparent rounded-full animate-spin [&~*]:opacity-0 [&~*]:invisible", loadingSizeClassNames[size])}></div>
 
     return (

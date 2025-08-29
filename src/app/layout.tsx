@@ -30,7 +30,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${poppins.className} antialiased`}
       >
         {children}
-        <SplashCursor />
+        {/* <SplashCursor /> */}
       </body>
     </html>
   );
