@@ -8,11 +8,11 @@ export interface InputProps extends ComponentProps<"input"> {
     inputSize?: InputSize;
     leftIcon?: React.ReactElement<HTMLAttributes<HTMLElement>, string>;
     rightIcon?: React.ReactElement<HTMLAttributes<HTMLElement>, string>;
+    error?: string;
 }
 
-export default function Input({ inputSize = "md", leftIcon, rightIcon, ...inputProps }: InputProps) {
+export default function Input({ inputSize = "md", leftIcon, rightIcon, error, ...inputProps }: InputProps) {
     const isDisabled = inputProps.disabled;
-
     const sizeClassNames: Record<InputSize, string> = {
         "sm": "px-2 py-1 text-sm",
         "md": "px-3 py-2 text-base",
@@ -33,33 +33,43 @@ export default function Input({ inputSize = "md", leftIcon, rightIcon, ...inputP
 
     const leftIconClone = cloneIconElement(leftIcon, iconSizeClassNames[inputSize]);
     const rightIconClone = cloneIconElement(rightIcon, iconSizeClassNames[inputSize]);
-
     return (
-        <div className="relative h-fit">
-            <div className={twMerge("absolute left-2 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none group-disabled:opacity-50",
-                iconSizeClassNames[inputSize],
-                isDisabled && "opacity-50"
-            )}>
-                {leftIconClone}
+        <div>
+            <div className="relative h-fit">
+                {leftIcon && (
+                    <div className={twMerge(
+                        "absolute left-2 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none group-disabled:opacity-50",
+                        iconSizeClassNames[inputSize],
+                        isDisabled && "opacity-50",
+                        error && "text-red-500",
+                    )}>
+                        {leftIconClone}
+                    </div>
+                )}
+
+                <input
+                    className={
+                        twMerge("w-full text-gray-700 border border-gray-300 rounded-md outline-0 disabled:opacity-50 focus:border-blue-700",
+                            sizeClassNames[inputSize],
+                            leftIcon && paddingContainIcon[inputSize].left,
+                            rightIcon && paddingContainIcon[inputSize].right,
+                            error && "border-red-500 focus:border-red-500"
+                        )}
+                    {...inputProps}
+
+                />
+                {rightIcon && (
+                    <div className={twMerge("absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none",
+                        iconSizeClassNames[inputSize],
+                        isDisabled && "opacity-50",
+                        error && "text-red-500"
+                    )}>
+                        {rightIconClone}
+                    </div>
+                )}
             </div>
 
-            <input
-                placeholder="Enter name"
-                className={
-                    twMerge("w-full text-gray-700 border border-gray-300 rounded-md outline-0 disabled:opacity-50 focus:border-blue-700 transition-all",
-                        sizeClassNames[inputSize],
-                        leftIcon && paddingContainIcon[inputSize].left,
-                        rightIcon && paddingContainIcon[inputSize].right
-                    )}
-                {...inputProps}
-            />
-
-            <div className={twMerge("absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none",
-                iconSizeClassNames[inputSize],
-                isDisabled && "opacity-50"
-            )}>
-                {rightIconClone}
-            </div>
+            {error && <p className="text-sm text-red-500 mt-1">{error}</p>}
         </div>
     )
 }
