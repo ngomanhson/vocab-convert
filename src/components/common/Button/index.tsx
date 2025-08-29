@@ -51,7 +51,7 @@ export default function Button({ children, variant = "ghost", size = "lg", leftI
     }) : null;
 
 
-    const loading = <div className={twMerge("absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 size-5 border-2 border-current border-t-transparent border-b-transparent rounded-full animate-spin", loadingSizeClassNames[size])}></div>
+    const loading = <div className={twMerge("absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 size-5 border-2 border-current border-t-transparent border-b-transparent rounded-full animate-spin [&~*]:opacity-0 [&~*]:invisible", loadingSizeClassNames[size])}></div>
 
     return (
         <button
@@ -63,12 +63,11 @@ export default function Button({ children, variant = "ghost", size = "lg", leftI
                     className,
                 )}
             {...buttonProps}
+            disabled={buttonProps.disabled || isLoading}
         >
-            {isLoading ? loading :
-                <>
-                    {leftIconClone}
-                    {children}
-                </>}
+            {isLoading && loading}
+            {leftIconClone}
+            {isLoading ? <div> {children}</div> : children}
         </button>
     );
 }
