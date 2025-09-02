@@ -11,5 +11,6 @@ export const useGetProducts = () => {
         staleTime: 1000 * 60 * 5,
         refetchOnWindowFocus: false,
         refetchOnMount: false,
+        enabled: typeof window !== "undefined",
     })
 }
